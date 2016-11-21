@@ -2,7 +2,7 @@
 require 'csv'
 
 class Person # purpose of this class?
-  attr_accessor :name, :phone_number, :address, :position, :salary, :slack_acct, :github_acct
+  attr_accessor :name, :phone_number, :address, :position, :salary, :slack_account, :github_account
 end
 
 class TIYdatabase
@@ -82,10 +82,10 @@ class TIYdatabase
       person.salary = gets.chomp
 
       puts "What is the slack account?"
-      person.slack_acct = gets.chomp
+      person.slack_account = gets.chomp
 
       puts "What is the github_acct?"
-      person.github_acct = gets.chomp
+      person.github_account = gets.chomp
 
       @people << person
 

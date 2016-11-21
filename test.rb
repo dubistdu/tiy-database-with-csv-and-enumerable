@@ -1,5 +1,5 @@
 
-require 'csv'
+#require 'csv'
 
 class Person # purpose of this class?
   attr_accessor :name, :phone_number, :address, :position, :salary, :slack_acct, :github_acct
@@ -9,41 +9,27 @@ class TIYdatabase
   def initialize
     @people = [] # instance variables hold data It's a container
 
-    CSV.foreach("tiy_employees.csv", headers:true) do |person|
-      name = person["name"]
-      phone_number = person["phone"]
-      address = person["address"]
-      position = person["position"]
-      salary = person["salary"]
-      slack_account = person["slack"]
-      github_account = person["github"]
-
-      add_to_tiy_database(name, phone_number, address, position,salary, slack_account, github_account)
-    end
+    #CSV.foreach("tiy_employees.csv", headers:true) do |person|
+    #  name = person["name"]
+    #  phone_number = person["phone"]
+    #  address = person["address"]
+    #  position = person["position"]
+    #  salary = person["salary"]
+    #  slack_account = person["slack"]
+    #  github_account = person["github"]
+#
+    #  add_to_inventory(name, phone_number, address, position,salary, slack_account, github_account)
+    #end
   end
 
   def save_inventory
     csv = CSV.open("tiy_employees.csv", "w")
-    csv.add_row %w{name phone address position salary slack github}
+    csv.add_row %w[name phone address position salary slack github]
 
     @people.each do |person|
       csv.add_row [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
     end
     csv.close
-  end
-
-  # add tiy database to CSV
-  def add_to_tiy_database(name, phone_number, address, position, salary, slack_account, github_account)
-    person = Person.new
-    person.name = name
-    person.phone_number = phone_number
-    person.address = address
-    person.position = position
-    person.salary = salary
-    person.slack_account = slack_account
-    person.github_account = github_account
-
-    @people << person
   end
 
   def print_inventory
@@ -69,14 +55,14 @@ class TIYdatabase
 
       person.name = search_name
 
-      puts "What is the phone number"
-      person.phone_number = gets.chomp
+      puts "What is the position?"
+      person.position = gets.chomp
 
       puts "What is the address?"
       person.address = gets.chomp
 
-      puts "What is the position"
-      person.position = gets.chomp
+      puts "What is the phone number?"
+      person.phone_number = gets.chomp
 
       puts "What is the salary?"
       person.salary = gets.chomp
@@ -89,7 +75,7 @@ class TIYdatabase
 
       @people << person
 
-      save_inventory
+      #save_inventory
     end
 
   end
@@ -102,11 +88,11 @@ class TIYdatabase
     banner
     puts person.name
     banner
-    puts "Phone number: #{person.phone_number}"
+    puts "Position: #{person.position}"
     puts ""
     puts "Address: #{person.address}"
     puts ""
-    puts "Position: #{person.position}"
+    puts "Phone number: #{person.phone_number}"
     puts ""
     puts "Salary: #{person.salary}"
     puts ""
@@ -125,7 +111,7 @@ class TIYdatabase
       puts "Sorry, there is no such name"
     else
       found_people.each do |person|
-        print_inventory
+        print_all_attr(person)
       end
     end
   end
@@ -151,12 +137,12 @@ class TIYdatabase
 
   def print_list
     puts "Here is the list"
+    # person = @people[index]
     @people.each do |person|
       print_all_attr(person)
     end
   end
 
-  # runs the app
   def menu
     loop do
       puts "What do you want to do? (A)dd (S)earch (D)elete? (P)rint list (E)xit"
@@ -167,13 +153,14 @@ class TIYdatabase
 
         when "D"
           delete
-          save_inventory
+          #save_inventory
 
         when "S"
           search
 
         when "P"
-          print_inventory
+         print_list
+        #  print_inventory
 
         when "E"
           break
